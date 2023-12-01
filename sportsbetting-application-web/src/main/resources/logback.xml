@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<configuration>
+
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender class="ch.qos.logback.core.FileAppender" name="FLOUT">
+        <param name="file" value="logging.log" />
+        <param name="append" value="false" />
+        <param name="threshold" value="info" />
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="FLOUT"/>
+    </root>
+
+    <logger name="com.epam" level="info"/>
+    <logger name="org.springframework" level="info"/>
+
+</configuration>

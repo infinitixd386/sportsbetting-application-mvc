@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SportsBetting</title>
+    <link th:href="@{/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/custom.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div id="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="navbar-brand">SportsBetting</div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"><a class="nav-link" th:href=homepage.html>Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href=events.html>Events</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Language
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">EN</a>
+                        <a class="dropdown-item" href="#">HU</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="btn btn-outline-success my-2 my-sm-0" th:href="@{/logout}"> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="card border border-info border-3 mt-3">
+        <div class="card-header bg-info">
+            <h5>Account Details</h5>
+        </div>
+        <div class="card-body bg-light">
+            <form action="#" th:action="@{/saveProfile.html}" method="post" th:object="${playerModel}">
+                <div class="form-group">
+                    <label for="input_name">Name</label>
+                    <input class="form-control" id="input_name" type="text" path="input_name" th:field="*{name}"
+                           placeholder="Name"/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"/>
+                    <input class="form-control" type="hidden" path="user_version" th:field="*{version}"/>
+                </div>
+                <div class="form-group">
+                    <label for="input_birth-date">Date of birth</label>
+                    <input class="form-control" path="birth-date" id="input_birth-date" placeholder="Date of birth"/>
+                </div>
+                <div class="form-group">
+                    <label for="input_account-number">Account number</label>
+                    <input class="form-control" path="account-number" id="input_account-number"
+                           placeholder="Account number"/>
+                </div>
+                <div class="form-group">
+                    <label for="input_currency">Currency</label>
+                    <select id="input_currency" name="Currency" th:field="*{currency}">
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="HUF">HUF</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="input_balance">Balance</label>
+                    <input class="form-control" type="text" path="balance" id="input_balance" th:field="*{balance}"
+                           placeholder="Balance"/>
+                    <p th:if="${#fields.hasErrors('balance')}" th:errorclass="error" th:errors="*{balance}"/>
+                </div>
+                <div class="alert alert-success" role="alert" th:if="${message != null}" th:text="${message}">
+                    Save Success!
+                </div>
+                <div id="submit">
+                    <button type="submit" class="btn btn-info">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card border border-info border-3">
+        <div class="card-header bg-info">
+            <h5>Wagers</h5>
+        </div>
+        <div class="card-body bg-light">
+            <div class="alert alert-success" role="alert" th:if="${wagerMessage != null}" th:text="${wagerMessage}">
+                Save Success!
+            </div>
+            <table class="table table-bordered bg-white">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Event title</th>
+                    <th>Event type</th>
+                    <th>Bet type</th>
+                    <th>Outcome value</th>
+                    <th>Outcome odd</th>
+                    <th>Wager amount</th>
+                    <th>Winner</th>
+                    <th>Processed</th>
+                </tr>
+                </thead>
+                <th:if test="${#!wagerModelList.playersWagers.isEmpty()}">
+                    <tbody>
+                    <tr th:each="wager : ${wagerModelList.playersWagers}">
+                        <th:if test="${#wager.wagerProcessed.equals(" - ")}">
+                        <td>
+                            <a class="btn btn-outline-danger" th:href="@{/homepage(removeId=${wager.wagerId})}">
+                                Remove</a>
+                        </td>
+                </th:if>
+                <td th:text="${wager.wagerId}">#</td>
+                <td th:text="${wager.eventTitle}">Event title</td>
+                <td th:text="${wager.eventType}">Event type</td>
+                <td th:text="${wager.betDescription}">Bet type</td>
+                <td th:text="${wager.outcomeDescription}">Outcome value</td>
+                <td th:text="${wager.outcomeOdd}">Outcome odd</td>
+                <td th:text="${wager.wagerAmount}">Wager amount</td>
+                <td th:text="${wager.wagerWin}">Winner</td>
+                <td th:text="${wager.wagerProcessed}">Processed</td>
+                </tr>
+                </tbody>
+                </th:if>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

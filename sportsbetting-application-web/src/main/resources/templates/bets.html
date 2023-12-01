@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SportsBetting</title>
+    <link th:href="@{/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/custom.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div id="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="navbar-brand">SportsBetting</div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" th:href=homepage.html>Home</a></li>
+                <li class="nav-item active"><a class="nav-link" th:href=events.html>Events</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Language
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">EN</a>
+                        <a class="dropdown-item" href="#">HU</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="btn btn-outline-success my-2 my-sm-0" th:href="@{/logout.html}"> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="card border border-info border-3">
+        <div class="card-header bg-info">
+            <h5>Selected Event</h5>
+        </div>
+        <div class="card-body bg-light">
+            <table class="table table-bordered bg-white">
+                <thead>
+                <tr>
+                    <th>Event title</th>
+                    <th>Event type</th>
+                    <th>Event start</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${betModelList.eventTitle}">Event title</td>
+                    <td th:text="${betModelList.eventType}">Event type</td>
+                    <td th:text="${betModelList.eventStartdate}">Event start</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="card border border-info border-3">
+                <div class="card-header bg-info">
+                    <h5>Bets</h5>
+                </div>
+                <div class="card-body bg-light">
+                    <table class="table table-bordered bg-white">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Bet description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="bet : ${betModelList.bets}">
+                            <td><a class="btn btn-warning"
+                                   th:href="@{/events/bets/wagers(eventId=${betModelList.eventId},betId=${bet.betId})}">Select</a>
+                            </td>
+                            <td th:text="${bet.betDescription}">Bet description</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
